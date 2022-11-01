@@ -1,5 +1,5 @@
 {
-  "name": "vite-template",
+  "name": "amChart-starter",
   "version": "0.1.0",
   "scripts": {
     "dev": "vite",
@@ -7,10 +7,11 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "pinia": "^2.0.22",
+    "@amcharts/amcharts5": "^5.2.31",
+    "pinia": "^2.0.23",
     "sass": "^1.55.0",
     "vue": "^3.2.33",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.4",
