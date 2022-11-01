@@ -1,0 +1,1 @@
+import{_ as t,o,c as s,p as a,a as _,b as c}from"./index.ce504e4c.js";const p={setup(){return{}}},r=e=>(a("data-v-4b00ff8e"),e=e(),_(),e),n=r(()=>c("h1",{class:"title"},"\u7B2C\u4E00\u9801\u7531\u6B64\u958B\u59CB",-1)),d=[n];function u(e,f,i,l,h,m){return o(),s("main",null,d)}var x=t(p,[["render",u],["__scopeId","data-v-4b00ff8e"]]);export{x as default};
