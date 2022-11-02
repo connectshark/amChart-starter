@@ -12,57 +12,91 @@ const useChart = () => {
     root.setThemes([am5themes_Animated.new(root)])
     const chart = root.container.children.push(
       am5xy.XYChart.new(root, {
-        panY: false,
-        layout: root.verticalLayout
+        panX: true,
+        panY: true,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX:true
       })
     )
-    let data = [{
-      category: "Research",
-      value1: 1000,
-      value2: 588
-    }, {
-      category: "Marketing",
-      value1: 1200,
-      value2: 1800
-    }, {
-      category: "Sales",
-      value1: 850,
-      value2: 1230
-    }]
 
+    let data = [{
+      country: "USA",
+      value: 2025
+    }, {
+      country: "China",
+      value: 1882
+    }, {
+      country: "Japan",
+      value: 1809
+    }, {
+      country: "Germany",
+      value: 1322
+    }, {
+      country: "UK",
+      value: 1122
+    }, {
+      country: "France",
+      value: 1114
+    }, {
+      country: "India",
+      value: 984
+    }, {
+      country: "Spain",
+      value: 711
+    }, {
+      country: "Netherlands",
+      value: 665
+    }, {
+      country: "South Korea",
+      value: 443
+    }, {
+      country: "Canada",
+      value: 441
+    }];
+    const xRenderer = am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+    xRenderer.labels.template.setAll({
+      rotation: -90,
+      centerY: am5.p50,
+      centerX: am5.p100,
+      paddingRight: 15
+    });
     const yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
+        maxDeviation: 0.3,
         renderer: am5xy.AxisRendererY.new(root, {})
       })
     )
     const xAxis = chart.xAxes.push(
       am5xy.CategoryAxis.new(root, {
-        renderer: am5xy.AxisRendererX.new(root, {}),
-        categoryField: "category"
+        maxDeviation: 0.3,
+        categoryField: "country",
+        renderer: xRenderer,
+        tooltip: am5.Tooltip.new(root, {})
       })
     )
     xAxis.data.setAll(data)
-    const series1 = chart.series.push(
-      am5xy.ColumnSeries.new(root, {
-        name: 'Series',
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: 'value1',
-        categoryXField: 'category'
+    const series = chart.series.push(am5xy.ColumnSeries.new(root, {
+      name: "country",
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value",
+      sequencedInterpolation: true,
+      categoryXField: "country",
+      tooltip: am5.Tooltip.new(root, {
+        labelText:"{valueY}"
       })
-    );
-    series1.data.setAll(data)
+    }))
+    series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5 });
+    series.columns.template.adapters.add("fill", function(fill, target) {
+      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    });
 
-    const series2 = chart.series.push(
-      am5xy.ColumnSeries.new(root, {
-        name: 'Series',
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: 'value2',
-        categoryXField: 'category'
-      })
-    )
-    series2.data.setAll(data)
+    series.columns.template.adapters.add("stroke", function(stroke, target) {
+      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    });
+    series.data.setAll(data)
+
     let legend = chart.children.push(am5.Legend.new(root, {}))
     legend.data.setAll(chart.series.values)
 
